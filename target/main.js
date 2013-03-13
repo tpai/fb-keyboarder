@@ -30,14 +30,14 @@ document.getElementById("navSearch").appendChild(tip("V"))
 
 var i, child_len, more_btn
 window.onkeydown = function(e) {
-	console.log(e.which)
+	//console.log(e.which)
 
 	var container, children, hover_style, n_shown
 	if(document.getElementById("fbNotificationsFlyout").className.search("toggleTargetClosed") == -1) {
 		container = document.getElementById("fbNotificationsList").parentNode.parentNode
 		children = document.getElementById("fbNotificationsList").childNodes
 		more_btn = document.getElementsByClassName("notifMorePager")[0]
-		hover_style = "jewelItemNew"
+		hover_style = "notifHover"
 		n_shown = 7
 	}
 	else if (document.getElementById("fbMessagesFlyout").className.search("toggleTargetClosed") == -1) {
@@ -48,32 +48,55 @@ window.onkeydown = function(e) {
 		n_shown = 5
 	}
 
+	//ctrl+alt+
 	if(e.ctrlKey && e.altKey) {
 		switch(e.which) {
+			//Z
 			case 90:
 				document.getElementById("fbRequestsJewel").getElementsByTagName("a")[0].click()
 				break
+			//X
 			case 88:
 				document.getElementById("fbMessagesJewel").getElementsByTagName("a")[0].click()
-				i = 0
 				container.style.top = "0px"
+				
+				//clear hover from all children
+				for(var j=0;j<children.length;j++) {
+					children[j].className = children[j].className.replace(" "+hover_style, "")
+				}
+				
+				i = 0
 				children[i].className += " "+hover_style
 				break
+			//C
 			case 67:
 				document.getElementById("fbNotificationsJewel").getElementsByTagName("a")[0].click()
-				i = 0
 				container.style.top = "0px"
+
+				//clear hover from all children
+				for(var j=0;j<children.length;j++) {
+					children[j].className = children[j].className.replace(" "+hover_style, "")
+				}
+
+				i = 0
 				children[i].className += " "+hover_style
 				break
+			//V
 			case 86:
 				document.getElementById("q").focus()
 				break
 
+			//?
 			case 191: chatOnOff(0); break;
+			//>
 			case 190: chatOnOff(1); break;
+			//<
 			case 188: chatOnOff(2); break;
+			//M
 			case 77: chatOnOff(3); break;
+			//N
 			case 78: chatOnOff(4); break;
+			//B
 			case 66: chatOnOff(5); break;
 		}
 		return false;
@@ -81,6 +104,15 @@ window.onkeydown = function(e) {
 	else if(e.altKey) {
 
 		switch(e.which) {
+			//alt+1
+			case 97:
+				document.getElementById("navHome").getElementsByTagName("a")[0].click()
+				break
+			//alt+2
+			case 98:
+				document.getElementsByClassName("headerTinymanName")[0].parentNode.click()
+				break
+			//alt+↑
 			case 38:
 				if(i - 1 >= 0) {
 
@@ -102,6 +134,7 @@ window.onkeydown = function(e) {
 					children[i].className += " "+hover_style
 				}
 				break
+			//alt+↓
 			case 40:
 				i++;
 
@@ -111,18 +144,19 @@ window.onkeydown = function(e) {
 					children[i].className += " "+hover_style
 
 					child_len = children.length
-
 					if(i % n_shown == 0) {
+						if(container.style.top == "")container.style.top = "0px" //to avoid empty
 						var top = parseInt(container.style.top, 10)
 
 						var nowTop = top
 						for(var j=i-n_shown;j<i;j++)
 							nowTop -= children[j].clientHeight-1;
-						
+
 						container.style.top = nowTop + "px"
 					}
 				}
 				break
+			//alt+↵
 			case 13:
 				if(document.getElementById("fbNotificationsFlyout").className.search("toggleTargetClosed") == -1)
 					children[i].getElementsByTagName("a")[0].click()
@@ -133,6 +167,7 @@ window.onkeydown = function(e) {
 	}
 	else if(e.ctrlKey) {
 		switch(e.which) {
+			//ctrl+↵
 			case 13:
 				if(document.getElementById("fbNotificationsFlyout").className.search("toggleTargetClosed") == -1)
 					children[i].getElementsByTagName("a")[0].click()
@@ -144,8 +179,15 @@ window.onkeydown = function(e) {
 };
 
 setInterval(function() {
-	if((i+1) / child_len >= 0.8) {
-
-		more_btn.getElementsByTagName("a")[0].click()
+	if(document.getElementById("fbNotificationsFlyout").className.search("toggleTargetClosed") == -1) {
+		if((i+1) / document.getElementById("fbNotificationsList").childNodes.length >= 0.8) {
+			document.getElementsByClassName("notifMorePager")[0].getElementsByTagName("a")[0].click()
+		}
 	}
+	else if (document.getElementById("fbMessagesFlyout").className.search("toggleTargetClosed") == -1) {
+		if((i+1) / document.getElementsByClassName("jewelContent")[0].getElementsByTagName("li").length >= 0.8) {
+			document.getElementsByClassName("uiMorePager")[0].getElementsByTagName("a")[0].click()
+		}
+	}
+	else i = 0
 }, 1000);
