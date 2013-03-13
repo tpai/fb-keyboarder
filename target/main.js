@@ -32,7 +32,7 @@ var i, child_len, more_btn
 window.onkeydown = function(e) {
 	//console.log(e.which)
 
-	var container, children, hover_style, n_shown
+	var trigger, container, children, hover_style, n_shown
 	if(document.getElementById("fbNotificationsFlyout").className.search("toggleTargetClosed") == -1) {
 		container = document.getElementById("fbNotificationsList").parentNode.parentNode
 		children = document.getElementById("fbNotificationsList").childNodes
@@ -57,20 +57,14 @@ window.onkeydown = function(e) {
 				break
 			//X
 			case 88:
-				document.getElementById("fbMessagesJewel").getElementsByTagName("a")[0].click()
-				container.style.top = "0px"
-				
-				//clear hover from all children
-				for(var j=0;j<children.length;j++) {
-					children[j].className = children[j].className.replace(" "+hover_style, "")
-				}
-				
-				i = 0
-				children[i].className += " "+hover_style
-				break
+				trigger = document.getElementById("fbMessagesJewel").getElementsByTagName("a")[0]
 			//C
 			case 67:
-				document.getElementById("fbNotificationsJewel").getElementsByTagName("a")[0].click()
+				if(!trigger) trigger = document.getElementById("fbNotificationsJewel").getElementsByTagName("a")[0]
+
+				if ("activeElement" in document)document.activeElement.blur()
+
+				trigger.click()
 				container.style.top = "0px"
 
 				//clear hover from all children
@@ -86,6 +80,8 @@ window.onkeydown = function(e) {
 				document.getElementById("q").focus()
 				break
 
+			//"
+			case 222: document.getElementsByClassName("fbChatSidebarMessage")[0].nextSibling.getElementsByClassName("innerWrap")[0].childNodes[0].focus(); break;
 			//?
 			case 191: chatOnOff(0); break;
 			//>
@@ -158,10 +154,10 @@ window.onkeydown = function(e) {
 				break
 			//alt+↵
 			case 13:
-				if(document.getElementById("fbNotificationsFlyout").className.search("toggleTargetClosed") == -1)
+				if(document.getElementById("fbNotificationsFlyout").className.search("toggleTargetClosed") == -1 || document.getElementById("fbMessagesFlyout").className.search("toggleTargetClosed") == -1) {
+					children[i].getElementsByTagName("a")[0].target = "_blank"
 					children[i].getElementsByTagName("a")[0].click()
-				else if (document.getElementById("fbMessagesFlyout").className.search("toggleTargetClosed") == -1)
-					children[i].getElementsByTagName("a")[0].click()
+				}
 				break
 		}
 	}
@@ -169,10 +165,10 @@ window.onkeydown = function(e) {
 		switch(e.which) {
 			//ctrl+↵
 			case 13:
-				if(document.getElementById("fbNotificationsFlyout").className.search("toggleTargetClosed") == -1)
+				if(document.getElementById("fbNotificationsFlyout").className.search("toggleTargetClosed") == -1 || document.getElementById("fbMessagesFlyout").className.search("toggleTargetClosed") == -1) {
+					children[i].getElementsByTagName("a")[0].target = "_blank"
 					children[i].getElementsByTagName("a")[0].click()
-				else if (document.getElementById("fbMessagesFlyout").className.search("toggleTargetClosed") == -1)
-					children[i].getElementsByTagName("a")[0].click()
+				}
 				break
 		}
 	}
