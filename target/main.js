@@ -1,6 +1,5 @@
+var home
 //畫面移至story處 並點開留言
-//var home = document.getElementById("home_stream")
-var home = document.getElementsByClassName("uiStreamHomepage")[0]
 var showStory = function(index) {
 	temp = index
 	var story = home.getElementsByClassName("uiStreamStory")[index]
@@ -35,6 +34,10 @@ var tip = function(value) {
 	ico.setAttribute("style", "position: absolute; right: 0px; bottom: 0px; font-size: 10px; line-height: 1; background-color: #3b5998; color: white;")
 	ico.innerHTML = value
 	return ico
+};
+
+window.onload = function() {
+	console.log("Test");
 };
 
 document.getElementById("navHome").getElementsByTagName("a")[0].style.lineHeight = "14px"
@@ -238,8 +241,15 @@ setInterval(function() {
 		}
 	}
 	else {
+		//如果有兩個以上的uiStreamHomepage必然是社團中的置頂跟一般貼文 預設選擇一般貼文 並且必須時時更新 因為使用者可能會用滑鼠點開其他社團
+		home = (document.getElementsByClassName("uiStreamHomepage").length > 1)?document.getElementsByClassName("uiStreamHomepage")[1]:document.getElementsByClassName("uiStreamHomepage")[0]
 		if((story_i+1) / home.getElementsByClassName("uiStreamStory").length >= 0.8) {
-			document.getElementById("pagelet_stream_pager").getElementsByClassName("uiMorePagerPrimary")[0].click()
+			//首頁的更多消息按鈕id與社團的不同
+			if(document.getElementById("pagelet_stream_pager") != null) {
+				document.getElementById("pagelet_stream_pager").getElementsByClassName("uiMorePagerPrimary")[0].click()
+			}
+			else document.getElementById("pagelet_group_pager").getElementsByClassName("uiMorePagerPrimary")[0].click()
+			
 		}
 	}
 }, 1000);
