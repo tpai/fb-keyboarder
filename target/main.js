@@ -252,8 +252,12 @@ window.onkeydown = function(e) {
 					showStory(story_i)
 				}
 				else if(group_i != 0 && state == "group") {
-					sidebar.children[group_i-1].getElementsByClassName("item")[0].style.backgroundColor = "#ffffff"
-					sidebar.children[group_i].getElementsByClassName("item")[0].style.backgroundColor = "#eff2f7"
+					//防止超過最愛的總數
+					if(group_i > sidebar.children.length - 1)group_i--;
+					else {
+						sidebar.children[group_i-1].getElementsByClassName("item")[0].style.backgroundColor = "#ffffff"
+						sidebar.children[group_i].getElementsByClassName("item")[0].style.backgroundColor = "#eff2f7"
+					}
 				}
 				break
 			//alt+↵
