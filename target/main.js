@@ -1,4 +1,32 @@
-var home
+var msg_notif_i = 0, //msg & notif 索引
+	story_i = 0, //story 索引
+	group_i = 0, //sidebar 索引
+	more_btn, //更多貼文按鈕物件
+	home, //story container
+	sidebar, //group container
+	state = "story" //story or group
+	
+var setContainer = function(state) {
+	if(state == "story") {
+		//如果有兩個以上的uiStreamHomepage必然是社團中的置頂跟一般貼文 預設選擇一般貼文 並且必須時時更新 因為使用者可能會用滑鼠點開其他社團
+		home = (document.getElementsByClassName("uiStreamHomepage").length > 1)?document.getElementsByClassName("uiStreamHomepage")[1]:document.getElementsByClassName("uiStreamHomepage")[0]
+	}
+	else if(state == "group") {
+		sidebar = document.getElementById("pinnedNav").getElementsByClassName("uiSideNav")[0]
+		var groups = sidebar.getElementsByClassName("sideNavItem")
+		for(var i=0;i<groups.length;i++) {
+			if(groups[i].className.search("selectedItem") != -1) {
+				group_i = i
+			}
+		}
+	}
+};
+
+window.onload = function() {
+	setContainer("story")
+	setContainer("group")
+};
+
 //畫面移至story處 並點開留言
 var showStory = function(index) {
 	temp = index
@@ -36,10 +64,6 @@ var tip = function(value) {
 	return ico
 };
 
-window.onload = function() {
-	console.log("Test");
-};
-
 document.getElementById("navHome").getElementsByTagName("a")[0].style.lineHeight = "14px"
 document.getElementById("navHome").getElementsByTagName("a")[0].innerHTML += "<br />Alt+1"
 document.getElementsByClassName("headerTinymanName")[0].style.lineHeight = "14px"
@@ -50,9 +74,6 @@ document.getElementById("fbNotificationsJewel").appendChild(tip("C"))
 document.getElementById("fbNotificationsList").parentNode.parentNode.style.top = "0px"
 document.getElementById("navSearch").appendChild(tip("V"))
 
-var msg_notif_i = 0, //msg & notif 索引
-	story_i = 0, //story 索引
-	more_btn
 window.onkeydown = function(e) {
 	//console.log(e.which)
 	var trigger, container, children, hover_style, n_shown
@@ -74,8 +95,29 @@ window.onkeydown = function(e) {
 	//ctrl+alt+
 	if(e.ctrlKey && e.altKey) {
 		switch(e.which) {
+			//ESC
+			case 27:
+				if ("activeElement" in document)document.activeElement.blur()
+				break
+			//P
+			case 80:
+				if(document.getElementById("pagelet_stream_pager") != null)
+					document.getElementById("pagelet_composer").getElementsByTagName("textarea")[0].focus()
+				else
+					document.getElementById("pagelet_group_composer").getElementsByTagName("textarea")[0].focus()
+				break
 			//A
-			case 65: showStory(story_i = 0); break;
+			case 65:
+				state = "group"
+				window.scrollTo(0, 0)
+				sidebar.children[group_i].getElementsByClassName("item")[0].style.backgroundColor = "#eff2f7"
+				break
+			//S
+			case 83:
+				state = "story"
+				window.scrollTo(0, 0)
+				showStory(story_i = 0)
+				break
 			//Z
 			case 90:
 				document.getElementById("fbRequestsJewel").getElementsByTagName("a")[0].click()
@@ -139,7 +181,7 @@ window.onkeydown = function(e) {
 				break
 			//alt+↑
 			case 38:
-				if(msg_notif_i - 1 >= 0 || story_i - 1 >= 0) {
+				if(msg_notif_i - 1 >= 0 || story_i - 1 >= 0 || group_i - 1 >= 0) {
 
 					if(msg_notif_i % n_shown == 0) {
 
@@ -156,19 +198,24 @@ window.onkeydown = function(e) {
 
 					msg_notif_i--
 					story_i--
-					//如果沒有hover_style的設定就是story
+					group_i--
+					//如果沒有hover_style的設定就是story或group
 					if(hover_style != undefined) {
 						//移除上一個子代hover效果
 						children[msg_notif_i+1].className = children[msg_notif_i+1].className.replace(" "+hover_style, "")
 						//在當前子代加入hover效果
 						children[msg_notif_i].className += " "+hover_style
 					}
-					else {
+					else if(state == "story") {
 						//期間可能會穿插廣告類子代 因此必須位移
 						var dataft = home.getElementsByClassName("uiStreamStory")[story_i].getAttribute("data-ft")
 						if(dataft != null)
 							while(dataft.length >= 1000)story_i++
 						showStory(story_i)
+					}
+					else if(state == "group") {
+						sidebar.children[group_i+1].getElementsByClassName("item")[0].style.backgroundColor = "#ffffff"
+						sidebar.children[group_i].getElementsByClassName("item")[0].style.backgroundColor = "#eff2f7"
 					}
 				}
 				break
@@ -176,6 +223,7 @@ window.onkeydown = function(e) {
 			case 40:
 				msg_notif_i++
 				story_i++
+				group_i++
 				//如果沒有hover_style的設定就是story
 				if(msg_notif_i != 0 && hover_style != undefined) {
 					//移除上一個子代hover效果
@@ -196,20 +244,28 @@ window.onkeydown = function(e) {
 						container.style.top = nowTop + "px"
 					}
 				}
-				else if(story_i != 0) {
+				else if(story_i != 0 && state == "story") {
 					//期間可能會穿插廣告類子代 因此必須位移
 					var dataft = home.getElementsByClassName("uiStreamStory")[story_i].getAttribute("data-ft")
 					if(dataft != null)
 						while(dataft.length >= 1000)story_i++
 					showStory(story_i)
 				}
+				else if(group_i != 0 && state == "group") {
+					sidebar.children[group_i-1].getElementsByClassName("item")[0].style.backgroundColor = "#ffffff"
+					sidebar.children[group_i].getElementsByClassName("item")[0].style.backgroundColor = "#eff2f7"
+				}
 				break
 			//alt+↵
 			case 13:
-				//瀏覽msg跟notif皆更改成彈出式視窗
+				//點擊msg跟notif
 				if(document.getElementById("fbNotificationsFlyout").className.search("toggleTargetClosed") == -1 || document.getElementById("fbMessagesFlyout").className.search("toggleTargetClosed") == -1) {
+					//使用彈出式視窗
 					children[msg_notif_i].getElementsByTagName("a")[0].target = "_blank"
 					children[msg_notif_i].getElementsByTagName("a")[0].click()
+				}
+				else if(state == "group") {
+					sidebar.children[group_i].getElementsByClassName("item")[0].click()
 				}
 				break
 		}
@@ -218,10 +274,14 @@ window.onkeydown = function(e) {
 		switch(e.which) {
 			//ctrl+↵
 			case 13:
-				//瀏覽msg跟notif皆更改成彈出式視窗
+				//點擊msg跟notif
 				if(document.getElementById("fbNotificationsFlyout").className.search("toggleTargetClosed") == -1 || document.getElementById("fbMessagesFlyout").className.search("toggleTargetClosed") == -1) {
+					//使用彈出式視窗
 					children[msg_notif_i].getElementsByTagName("a")[0].target = "_blank"
 					children[msg_notif_i].getElementsByTagName("a")[0].click()
+				}
+				else if(state == "group") {
+					sidebar.children[group_i].getElementsByClassName("item")[0].click()
 				}
 				break
 		}
@@ -230,7 +290,7 @@ window.onkeydown = function(e) {
 
 //每秒鐘偵測是否有子代不足使用者瀏覽的情況 目前皆訂為瀏覽到80%就要繼續擷取
 setInterval(function() {
-	if(document.getElementById("fbNotificationsFlyout").className.search("toggleTargetClosed") == -1) {
+	if (document.getElementById("fbNotificationsFlyout").className.search("toggleTargetClosed") == -1) {
 		if((msg_notif_i+1) / document.getElementById("fbNotificationsList").childNodes.length >= 0.8) {
 			document.getElementsByClassName("notifMorePager")[0].getElementsByTagName("a")[0].click()
 		}
@@ -240,16 +300,14 @@ setInterval(function() {
 			document.getElementsByClassName("uiMorePager")[0].getElementsByTagName("a")[0].click()
 		}
 	}
-	else {
-		//如果有兩個以上的uiStreamHomepage必然是社團中的置頂跟一般貼文 預設選擇一般貼文 並且必須時時更新 因為使用者可能會用滑鼠點開其他社團
-		home = (document.getElementsByClassName("uiStreamHomepage").length > 1)?document.getElementsByClassName("uiStreamHomepage")[1]:document.getElementsByClassName("uiStreamHomepage")[0]
+	else if (state == "story"){
+		setContainer("story")
 		if((story_i+1) / home.getElementsByClassName("uiStreamStory").length >= 0.8) {
 			//首頁的更多消息按鈕id與社團的不同
 			if(document.getElementById("pagelet_stream_pager") != null) {
 				document.getElementById("pagelet_stream_pager").getElementsByClassName("uiMorePagerPrimary")[0].click()
 			}
 			else document.getElementById("pagelet_group_pager").getElementsByClassName("uiMorePagerPrimary")[0].click()
-			
 		}
 	}
 }, 1000);
