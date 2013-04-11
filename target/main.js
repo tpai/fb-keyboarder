@@ -92,7 +92,7 @@ window.onkeydown = function(e) {
 		n_shown = 5
 	}
 
-	//ctrl+alt+
+	//Ctrl+Alt+
 	if(e.ctrlKey && e.altKey) {
 		switch(e.which) {
 			//ESC
@@ -133,9 +133,10 @@ window.onkeydown = function(e) {
 				//疑問: 為何不放上面跟container一起? 因為上面的判斷條件是是否已開啟flyout 沒點按鈕怎麼開flyout呢
 				if(!trigger) trigger = document.getElementById("fbNotificationsJewel").getElementsByTagName("a")[0]
 
-				if ("activeElement" in document)document.activeElement.blur()
-
 				trigger.click() //按下按鈕
+
+				if ("activeElement" in document)document.activeElement.blur()
+				
 				container.style.top = "0px" //container位移至0
 
 				//清除所有msg(notif)的hover效果
@@ -146,13 +147,12 @@ window.onkeydown = function(e) {
 				//在第零個顯示hover效果
 				children[msg_notif_i].className += " "+hover_style
 				break
+			//D
+			case 68: document.getElementsByClassName("fbChatSidebarMessage")[0].nextSibling.getElementsByClassName("innerWrap")[0].childNodes[0].focus(); break;
 			//V
 			case 86:
 				document.getElementById("q").focus()
 				break
-
-			//"
-			case 222: document.getElementsByClassName("fbChatSidebarMessage")[0].nextSibling.getElementsByClassName("innerWrap")[0].childNodes[0].focus(); break;
 			//?
 			case 191: chatOnOff(0); break;
 			//>
@@ -171,15 +171,15 @@ window.onkeydown = function(e) {
 	else if(e.altKey) {
 
 		switch(e.which) {
-			//alt+1
+			//Alt+1
 			case 97:
 				document.getElementById("navHome").getElementsByTagName("a")[0].click()
 				break
-			//alt+2
+			//Alt+2
 			case 98:
 				document.getElementsByClassName("headerTinymanName")[0].parentNode.click()
 				break
-			//alt+↑
+			//Alt+↑
 			case 38:
 				if(msg_notif_i - 1 >= 0 || story_i - 1 >= 0 || group_i - 1 >= 0) {
 
@@ -219,7 +219,7 @@ window.onkeydown = function(e) {
 					}
 				}
 				break
-			//alt+↓
+			//Alt+↓
 			case 40:
 				msg_notif_i++
 				story_i++
@@ -260,7 +260,11 @@ window.onkeydown = function(e) {
 					}
 				}
 				break
-			//alt+↵
+		}
+	}
+	else if(e.ctrlKey) {
+		switch(e.which) {
+			//Ctrl+↵
 			case 13:
 				//點擊msg跟notif
 				if(document.getElementById("fbNotificationsFlyout").className.search("toggleTargetClosed") == -1 || document.getElementById("fbMessagesFlyout").className.search("toggleTargetClosed") == -1) {
@@ -272,20 +276,10 @@ window.onkeydown = function(e) {
 					sidebar.children[group_i].getElementsByClassName("item")[0].click()
 				}
 				break
-		}
-	}
-	else if(e.ctrlKey) {
-		switch(e.which) {
-			//ctrl+↵
-			case 13:
-				//點擊msg跟notif
-				if(document.getElementById("fbNotificationsFlyout").className.search("toggleTargetClosed") == -1 || document.getElementById("fbMessagesFlyout").className.search("toggleTargetClosed") == -1) {
-					//使用彈出式視窗
-					children[msg_notif_i].getElementsByTagName("a")[0].target = "_blank"
-					children[msg_notif_i].getElementsByTagName("a")[0].click()
-				}
-				else if(state == "group") {
-					sidebar.children[group_i].getElementsByClassName("item")[0].click()
+			//Ctrl+\
+			case 220:
+				if(state == "story") {
+					home.getElementsByClassName("uiStreamStory")[story_i].getElementsByClassName("UFILikeLink")[0].click()
 				}
 				break
 		}
@@ -311,7 +305,9 @@ setInterval(function() {
 			if(document.getElementById("pagelet_stream_pager") != null) {
 				document.getElementById("pagelet_stream_pager").getElementsByClassName("uiMorePagerPrimary")[0].click()
 			}
-			else document.getElementById("pagelet_group_pager").getElementsByClassName("uiMorePagerPrimary")[0].click()
+			else if(document.getElementById("pagelet_group_pager") != null) {
+				document.getElementById("pagelet_group_pager").getElementsByClassName("uiMorePagerPrimary")[0].click()
+			}
 		}
 	}
 }, 1000);
