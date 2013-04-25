@@ -12,11 +12,13 @@ var setContainer = function(state) {
 		home = (document.getElementsByClassName("uiStreamHomepage").length > 1)?document.getElementsByClassName("uiStreamHomepage")[1]:document.getElementsByClassName("uiStreamHomepage")[0]
 	}
 	else if(state == "group") {
-		sidebar = document.getElementById("pinnedNav").getElementsByClassName("uiSideNav")[0]
-		var groups = sidebar.getElementsByClassName("sideNavItem")
-		for(var i=0;i<groups.length;i++) {
-			if(groups[i].className.search("selectedItem") != -1) {
-				group_i = i
+		if(document.getElementById("pinnedNav") != null) {
+			sidebar = document.getElementById("pinnedNav").getElementsByClassName("uiSideNav")[0]
+			var groups = sidebar.getElementsByClassName("sideNavItem")
+			for(var i=0;i<groups.length;i++) {
+				if(groups[i].className.search("selectedItem") != -1) {
+					group_i = i
+				}
 			}
 		}
 	}
@@ -300,6 +302,7 @@ setInterval(function() {
 	}
 	else if (state == "story"){
 		setContainer("story")
+		if(home != undefined)
 		if((story_i+1) / home.getElementsByClassName("uiStreamStory").length >= 0.8) {
 			//首頁的更多消息按鈕id與社團的不同
 			if(document.getElementById("pagelet_stream_pager") != null) {
