@@ -1,17 +1,17 @@
 {
 	"extName":
 	{
-		"message": "FB鍵盤手",
+		"message": "FB Shortcut",
 		"description":"擴充套件名稱"
 	},
 	"extShortName":
 	{
-		"message": "FB快捷",
+		"message": "FB Shortcut",
 		"description":"擴充套件簡稱"
 	},
 	"extDescription":
 	{
-		"message": "FB鍵盤手專為愛用鍵盤看FB的玩家設計，快捷操作簡單又迅速！",
+		"message": "More keyboard, less mouse. Browsing your facebook by combination key.",
 		"description":"擴充套件描述"
 	}
 }
