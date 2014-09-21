@@ -1,12 +1,15 @@
+if (navigator.appVersion.indexOf("Win")!=-1)os = "win"
+else if (navigator.appVersion.indexOf("Mac")!=-1)os = "mac"
+
 // Quick Launch Hint Text
 var tip = function(val) { return "<div style='position: absolute; right: 0px; bottom: 0px; font-size: 10px; line-height: 1; background-color: #3b5998; color: white;'>"+val+"</div>" };
 
-$("#navHome a").append("<br />Alt+1").css("line-height", "14px");
-$(".headerTinymanName").append("<br />Alt+2").css("line-height", "14px");
+$("ul[role='navigation'] li:nth-child(1)").find("a").find("span").append("<br />Alt+1").css("line-height", "14px");
+$("ul[role='navigation'] li:nth-child(2)").find("a").append("<br />Alt+2").css("line-height", "14px");
 $("#fbRequestsJewel").append(tip("Z"));
-$("#fbMessagesJewel").append(tip("X"));
+$("#fbRequestsJewel").next().append(tip("X"));
 $("#fbNotificationsJewel").append(tip("C"));
-$("#navSearch").append(tip("V"));
+$("#q").parent().append(tip("V"));
 
 // Chatbox Trigger
 var chatbox = function(offset) {
@@ -23,8 +26,21 @@ var chatbox = function(offset) {
 };
 
 // Track Keyboard Event
+
+var list_mode
+var list_index = 0
+
 window.onkeydown = function(e) {
-	if(e.ctrlKey && e.altKey) {
+	if(
+		(
+			os == "win" &&
+			e.ctrlKey && e.altKey
+		) ||
+		(
+			os == "mac" &&
+			e.metaKey && e.altKey
+		)
+	) {
 		switch(e.which) {
 			//P
 			case 80:
@@ -36,10 +52,14 @@ window.onkeydown = function(e) {
 				break;
 			//X
 			case 88:
-				$("#fbMessagesJewel").find("a.jewelButton")[0].click();
+				list_mode = "MercuryJewel";
+				list_index= 0;
+				$("#fbRequestsJewel").next().find("a.jewelButton")[0].click();
 				break;
 			//C
 			case 67:
+				list_mode = "fbNotifications";
+				list_index= 0;
 				$("#fbNotificationsJewel").find("a.jewelButton")[0].click();
 				break;
 			//D
@@ -68,5 +88,40 @@ window.onkeydown = function(e) {
 			case 66: chatbox(5); break;
 		}
 		return false;
+	}
+	else if(
+		(os == "win" && e.altKey ) ||
+		(os == "mac" && e.metaKey)
+	) {
+		// message select
+		if(list_mode == "MercuryJewel") {
+			switch(e.which) {
+				// arrow up
+				case 38:
+					if(list_index>0)list_index--
+					break;
+				// arrow down
+				case 40:
+					list_index++
+					break;
+			}
+			$("#MercuryJewelThreadList ul li").find("a:nth-child(1)")[list_index].focus()
+		}
+		// notification select
+		else if(list_mode == "fbNotifications") {
+	
+			switch(e.which) {
+				// arrow up
+				case 38:
+					if(list_index>0)list_index--
+					break;
+				// arrow down
+				case 40:
+					list_index++
+					break;
+			}
+			$("#fbNotificationsFlyout ul li").find("a:nth-child(1)")[list_index].focus()
+		
+		}
 	}
 };
