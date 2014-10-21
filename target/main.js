@@ -4,16 +4,24 @@ else if (navigator.appVersion.indexOf("Mac")!=-1)os = "mac"
 // Quick Launch Hint Text
 var tip = function(val) { return "<div style='position: absolute; right: 0px; bottom: 0px; font-size: 10px; line-height: 1; background-color: #3b5998; color: white;'>"+val+"</div>" };
 
-$("ul[role='navigation'] li:nth-child(1)").find("a").find("span").append("<br />Alt+1").css("line-height", "14px");
-$("ul[role='navigation'] li:nth-child(2)").find("a").append("<br />Alt+2").css("line-height", "14px");
-$("#fbRequestsJewel").append(tip("Z"));
+if(os == "win") {
+	$("#fbRequestsJewel").append(tip("Z"));
+	hint1 = "Alt+1";
+	hint2 = "Alt+2";
+}
+else {
+	hint1 = "C-O+1";
+	hint2 = "C-O+2";
+}
+$("ul[role='navigation'] li:nth-child(1)").find("a").find("span").append("<br />"+hint2).css("line-height", "14px");
+$("ul[role='navigation'] li:nth-child(2)").find("a").append("<br />"+hint1).css("line-height", "14px");
 $("#fbRequestsJewel").next().append(tip("X"));
 $("#fbNotificationsJewel").append(tip("C"));
 $("#q").parent().append(tip("V"));
 
 // Chatbox Trigger
 var chatbox = function(offset) {
-	var tabs = $("div[data-referrer='ChatTabsPagelet'] div.videoCallEnabled div.fbNub");
+	var tabs = $("#ChatTabsPagelet div.fbNub");
 	var tab = tabs[tabs.length - offset - 1]
 	if(tab != undefined) {
 		if($(tab).prop("class").search("opened") != -1) {
@@ -55,15 +63,17 @@ window.onkeydown = function(e) {
 				list_mode = "MercuryJewel";
 				list_index= 0;
 				$("#fbRequestsJewel").next().find("a.jewelButton")[0].click();
+				$("#fbNotificationsFlyout ul li").find("a:nth-child(1)")[list_index].focus();
 				break;
 			//C
 			case 67:
 				list_mode = "fbNotifications";
 				list_index= 0;
 				$("#fbNotificationsJewel").find("a.jewelButton")[0].click();
+				$("#fbNotificationsFlyout ul li").find("a:nth-child(1)")[list_index].focus();
 				break;
-			//D
-			case 68:
+			//F
+			case 70:
 				$(".fbChatSidebarMessage").next().find("input[type='text']").focus();
 				break;
 			//V
@@ -86,12 +96,16 @@ window.onkeydown = function(e) {
 			case 78: chatbox(4); break;
 			//B
 			case 66: chatbox(5); break;
+			//1
+			case 49: $("ul[role='navigation'] li:nth-child(2)").find("a")[0].click(); break;
+			//2
+			case 50: $("ul[role='navigation'] li:nth-child(1)").find("a")[0].click(); break;
 		}
 		return false;
 	}
 	else if(
 		(os == "win" && e.altKey ) ||
-		(os == "mac" && e.metaKey)
+		(os == "mac" && e.shiftKey)
 	) {
 		// message select
 		if(list_mode == "MercuryJewel") {
