@@ -61,16 +61,12 @@ window.onkeydown = function(e) {
 			//X
 			case 88:
 				list_mode = "MercuryJewel";
-				list_index= 0;
 				$("#fbRequestsJewel").next().find("a.jewelButton")[0].click();
-				$("#fbNotificationsFlyout ul li").find("a:nth-child(1)")[list_index].focus();
 				break;
 			//C
 			case 67:
 				list_mode = "fbNotifications";
-				list_index= 0;
 				$("#fbNotificationsJewel").find("a.jewelButton")[0].click();
-				$("#fbNotificationsFlyout ul li").find("a:nth-child(1)")[list_index].focus();
 				break;
 			//F
 			case 70:
@@ -119,7 +115,7 @@ window.onkeydown = function(e) {
 					list_index++
 					break;
 			}
-			$("#MercuryJewelThreadList ul li").find("a:nth-child(1)")[list_index].focus()
+			$("a.messagesContent")[list_index].focus()
 		}
 		// notification select
 		else if(list_mode == "fbNotifications") {
@@ -135,7 +131,6 @@ window.onkeydown = function(e) {
 					break;
 			}
 			$("#fbNotificationsFlyout ul li").find("a:nth-child(1)")[list_index].focus()
-		
 		}
 	}
 };
