@@ -2,7 +2,7 @@ if (navigator.appVersion.indexOf("Win")!=-1)os = "win"
 else if (navigator.appVersion.indexOf("Mac")!=-1)os = "mac"
 
 // Quick Launch Hint Text
-var tip = function(val) { return "<div style='position: absolute; right: 0px; bottom: 0px; font-size: 10px; line-height: 1; background-color: #3b5998; color: white;'>"+val+"</div>" };
+var tip = function(val) { return "<div style='position: absolute; padding: 3px; right: 0px; bottom: 0px; font-size: 10px; line-height: 1; background-color: #3b5998; color: white;'>"+val+"</div>" };
 
 if(os == "win") {
 	$("#fbRequestsJewel").append(tip("Z"));
@@ -13,16 +13,20 @@ else {
 	hint1 = "C-O+1";
 	hint2 = "C-O+2";
 }
-$("ul[role='navigation'] li:nth-child(1)").find("a").find("span").append("<br />"+hint2).css("line-height", "14px");
-$("ul[role='navigation'] li:nth-child(2)").find("a").append("<br />"+hint1).css("line-height", "14px");
-$("#fbRequestsJewel").next().append(tip("X"));
-$("#fbNotificationsJewel").append(tip("C"));
-$("#q").parent().append(tip("V"));
+
+$(document).ready(function() {
+	$("ul[role='navigation'] li:nth-last-child(1)").find("a").find("span").append("<br />"+hint2).css("line-height", "14px");
+	$("ul[role='navigation'] li:nth-last-child(2)").find("a").append("<br />"+hint1).css("line-height", "14px");
+	$("#fbRequestsJewel").next().append(tip("X"));
+	$("#fbNotificationsJewel").append(tip("C"));
+	$("#q").parent().append(tip("V"));
+	setTimeout(function() {$(".fbChatSidebarMessage").next().find("input[type='text']").parent().append(tip("F"));}, 1000);
+});
 
 // Chatbox Trigger
 var chatbox = function(offset) {
 	var tabs = $("#ChatTabsPagelet div.fbNub");
-	var tab = tabs[tabs.length - offset - 1]
+	var tab = tabs[tabs.length - offset - 1];
 	if(tab != undefined) {
 		if($(tab).prop("class").search("opened") != -1) {
 			$(tab).find("div.titlebar").click();
@@ -52,7 +56,7 @@ window.onkeydown = function(e) {
 		switch(e.which) {
 			//P
 			case 80:
-				$("textarea[name='xhpc_message']").focus();
+				$("textarea[name='xhpc_message_text']").focus();
 				break;
 			//Z
 			case 90:
@@ -80,11 +84,11 @@ window.onkeydown = function(e) {
 			case 76:
 				$("#logout_form").submit();
 				break;
-			//?
+			//\/
 			case 191: chatbox(0); break;
-			//>
+			//.
 			case 190: chatbox(1); break;
-			//<
+			//,
 			case 188: chatbox(2); break;
 			//M
 			case 77: chatbox(3); break;
