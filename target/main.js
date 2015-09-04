@@ -2,7 +2,7 @@ if (navigator.appVersion.indexOf("Win")!=-1)os = "win"
 else if (navigator.appVersion.indexOf("Mac")!=-1)os = "mac"
 
 // Quick Launch Hint Text
-var tip = function(val) { return "<div style='position: absolute; padding: 3px; right: 0px; bottom: 0px; font-size: 10px; line-height: 1; background-color: #3b5998; color: white;'>"+val+"</div>" };
+var tip = function(val) { return "<div style='position: absolute; padding: 2px; right: 0px; bottom: 0px; font-size: 10px; line-height: 1; background-color: #3b5998; color: white;'>"+val+"</div>" };
 
 if(os == "win") {
 	$("#fbRequestsJewel").append(tip("Z"));
@@ -15,12 +15,14 @@ else {
 }
 
 $(document).ready(function() {
-	$("ul[role='navigation'] li:nth-last-child(1)").find("a").find("span").append("<br />"+hint2).css("line-height", "14px");
-	$("ul[role='navigation'] li:nth-last-child(2)").find("a").append("<br />"+hint1).css("line-height", "14px");
 	$("#fbRequestsJewel").next().append(tip("X"));
 	$("#fbNotificationsJewel").append(tip("C"));
 	$("#q").parent().append(tip("V"));
-	setTimeout(function() {$(".fbChatSidebarMessage").next().find("input[type='text']").parent().append(tip("F"));}, 1000);
+	setTimeout(function() {
+		$(".fbChatSidebarMessage").next().find("input[type='text']").parent().append(tip("F"));
+		$("a[data-gt='{\"chrome_nav_item\":\"timeline_chrome\"}']").find("span").append("<br />"+hint2).css("line-height", "14px");
+		$("a[data-gt='{\"chrome_nav_item\":\"home_chrome\"}']").append("<br />"+hint1).css("line-height", "14px");
+	}, 1000);
 });
 
 // Chatbox Trigger
