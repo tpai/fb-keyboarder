@@ -15,12 +15,13 @@ else {
 }
 
 $(document).ready(function() {
-	$("#fbRequestsJewel").next().append(tip("X"));
+	$($("a.jewelButton")[1]).parent().append(tip("X"));
 	$("#fbNotificationsJewel").append(tip("C"));
 	$("#q").parent().append(tip("V"));
 	setTimeout(function() {
 		$(".fbChatSidebarMessage").next().find("input[type='text']").parent().append(tip("F"));
-		$("a[data-gt='{\"chrome_nav_item\":\"timeline_chrome\"}']").find("span").append("<br />"+hint2).css("line-height", "14px");
+		$("img[id^='profile_pic_header']").css("float", "left");
+		$("a[data-gt='{\"chrome_nav_item\":\"timeline_chrome\"}']").append("<br />"+hint2).css("line-height", "14px");
 		$("a[data-gt='{\"chrome_nav_item\":\"home_chrome\"}']").append("<br />"+hint1).css("line-height", "14px");
 	}, 1000);
 });
@@ -62,17 +63,17 @@ window.onkeydown = function(e) {
 				break;
 			//Z
 			case 90:
-				$("#fbRequestsJewel").find("a.jewelButton")[0].click();
+				$("a.jewelButton")[0].click();
 				break;
 			//X
 			case 88:
 				list_mode = "MercuryJewel";
-				$("#fbRequestsJewel").next().find("a.jewelButton")[0].click();
+				$("a.jewelButton")[1].click();
 				break;
 			//C
 			case 67:
 				list_mode = "fbNotifications";
-				$("#fbNotificationsJewel").find("a.jewelButton")[0].click();
+				$("a.jewelButton")[2].click();
 				break;
 			//F
 			case 70:
