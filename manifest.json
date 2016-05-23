@@ -1,19 +1,19 @@
 {
   "manifest_version": 2,
   "name": "__MSG_extName__",
-  "version": "2.1.8",
+  "version": "2.2.0",
   "description": "__MSG_extDescription__",
   "default_locale": "zh_TW",
   "icons": {
-	  "16": "imgs/icon_16.png",
-		"32": "imgs/icon_32.png",
-		"64": "imgs/icon_64.png",	
-		"128": "imgs/icon_128.png"
+    "16": "imgs/icon_16.png",
+    "32": "imgs/icon_32.png",
+    "64": "imgs/icon_64.png",
+    "128": "imgs/icon_128.png"
   },
   "content_scripts": [
     {
       "matches": ["http://www.facebook.com/*", "https://www.facebook.com/*", "https://apps.facebook.com/*"],
-      "js": ["libs/jquery-1.8.3.min.js", "target/main.js"],
+      "js": ["libs/jquery.min.js", "target/main.js"],
       "run_at": "document_end"
     }
   ],
@@ -21,7 +21,7 @@
     "tabs"
   ],
   "browser_action": {
-	  "default_icon": "imgs/default.png",
+      "default_icon": "imgs/default.png",
     "default_title": "__MSG_extName__",
     "default_popup": "popup/intro.html"
   }

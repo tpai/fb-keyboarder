@@ -1,51 +1,63 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#">
 <head>
-	<title>FB鍵盤手</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="assets/css/bootstrap-combined.min.css" rel="stylesheet">
-	<script src="assets/js/bootstrap.min.js"></script>
+    <title>FB鍵盤手</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="assets/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script src="assets/js/bootstrap.min.js"></script>
 </head>
 <body color="blue" vlink="blue" alink="blue">
-	<div style="width: 250px;">
-		<h4><img src="../imgs/icon_32.png" />FB鍵盤手</h4>
-		<h4><font color="red">Ctrl = ⌘, Alt = ⌥</font></h4>
-		<h5>快捷鍵</h5>
-		<ul class="nav nav-list">
-			<li>Ctrl+Alt+Z - 交友邀請</li>
-			<li>Ctrl+Alt+X - 收件匣</li>
-			<li>Ctrl+Alt+C - 通知</li>
-			<li>Ctrl+Alt+V - 搜尋人事物</li>
-			<li>Ctrl+Alt+P - 在想些什麼？</li>
-			<li>Alt+1 - 首頁 (Win)</li>
-			<li>Alt+2 - 動態時報 (Win)</li>
-			<li>⌘+⌥+1 - 首頁 (Mac)</li>
-			<li>⌘+⌥+2 - 動態時報 (Mac)</li>
-			<li>Alt+M - 發訊息 (官方)</li>
-		</ul>
-		<h5>便捷瀏覽 (開啟收件匣或通知後使用)</h5>
-		<ul class="nav nav-list">
-			<li>Alt+↑ - 上移(Win)</li>
-			<li>Alt+↓ - 下移(Win)</li>
-			<li>Shift+↑ - 上移(Mac)</li>
-			<li>Shift+↓ - 下移(Mac)</li>
-			<li>Enter - 本視窗開啟</li>
-			<li>Ctrl+Enter - 開新視窗</li>
-			<li>Space - 往下捲</li>
-		</ul>
-		<h5>聊天用</h5>
-		<ul class="nav nav-list">
-			<li>Ctrl+Alt+F - 搜尋對象</li>
-			<li>Ctrl+Alt+B - 聊天框1 (最左)</li>
-			<li>Ctrl+Alt+N - 聊天框2</li>
-			<li>Ctrl+Alt+M - 聊天框3</li>
-			<li>Ctrl+Alt+, - 聊天框4</li>
-			<li>Ctrl+Alt+. - 聊天框5</li>
-			<li>Ctrl+Alt+/ - 聊天框6 (最右)</li>
-			<li>ESC - 關閉</li>
-		</ul>
-		<pre>有問題請聯絡<a href="https://plus.google.com/u/0/105995346739870275944/about" target="_blank">tonypai</a><br>原始碼分享於<a href="https://github.com/tpai/fb-keyboarder" target="_blank">github</a></pre>
-	</div>
+    <div style="width: 250px;">
+        <h4><img src="../imgs/icon_32.png" />FB鍵盤手</h4>
+        搭配<a href="https://www.facebook.com/help/156151771119453">官方快速鍵</a>更方便
+        <h5>Mac</h5>
+        <ul id="forMac" class="nav nav-list">
+            <li>⌘+Ctrl+Z - 交友邀請</li>
+            <li>⌘+Ctrl+X - 收件匣</li>
+            <li>⌘+Ctrl+C - 通知</li>
+            <li>Shift+↑ - 上移訊息/通知</li>
+            <li>Shift+↓ - 下移訊息/通知</li>
+            <li>Enter - 開啟</li>
+            <li>⌘+Enter - 開新視窗</li>
+            <li>Space - 往下捲</li>
+            <li>⌘+Ctrl+V - 搜尋</li>
+            <li>⌘+Ctrl+F - 搜尋對象</li>
+            <li>⌘+Ctrl+B - 聊天框1 (最左)</li>
+            <li>⌘+Ctrl+N - 聊天框2</li>
+            <li>⌘+Ctrl+M - 聊天框3</li>
+            <li>⌘+Ctrl+, - 聊天框4</li>
+            <li>⌘+Ctrl+. - 聊天框5</li>
+            <li>⌘+Alt+/ - 聊天框6 (最右)</li>
+            <li>ESC - 關閉</li>
+            <li>Ctrl+⌥+1 - 首頁</li>
+            <li>Ctrl+⌥+2 - 動態時報</li>
+            <li>Ctrl+⌥++M - 發訊息</li>
+        </ul>
+        <h5>Windows</h5>
+        <ul id="forWin" class="nav nav-list">
+            <li>Ctrl+Alt+Z - 交友邀請</li>
+            <li>Ctrl+Alt+X - 收件匣</li>
+            <li>Ctrl+Alt+C - 通知</li>
+            <li>Alt+↑ - 上移訊息/通知</li>
+            <li>Alt+↓ - 下移訊息/通知</li>
+            <li>Enter - 開啟</li>
+            <li>Ctrl+Enter - 開新視窗</li>
+            <li>Space - 往下捲</li>
+            <li>Ctrl+Alt+V - 搜尋人事物</li>
+            <li>Ctrl+Alt+F - 搜尋對象</li>
+            <li>Ctrl+Alt+B - 聊天框1 (最左)</li>
+            <li>Ctrl+Alt+N - 聊天框2</li>
+            <li>Ctrl+Alt+M - 聊天框3</li>
+            <li>Ctrl+Alt+, - 聊天框4</li>
+            <li>Ctrl+Alt+. - 聊天框5</li>
+            <li>Ctrl+Alt+/ - 聊天框6 (最右)</li>
+            <li>ESC - 關閉</li>
+            <li>Alt+1 - 首頁</li>
+            <li>Alt+2 - 動態時報</li>
+            <li>Alt+M - 發訊息 (官方)</li>
+        </ul>
+        <pre>有問題請回報至 <a href="https://github.com/tpai/fb-keyboarder/issues" target="_blank">github</a></pre>
+    </div>
 </body>
 </html>
