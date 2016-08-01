@@ -111,7 +111,14 @@ window.onkeydown = function(e) {
                     list_index++
                     break;
             }
-            $("a.messagesContent")[list_index].focus()
+            $($("a.messagesContent")[list_index])
+                .focusin(function() {
+                    $(this).css("background-color", "#f6f7f9")
+                })
+                .focusout(function() {
+                    $(this).css("background-color", "")
+                })
+                .focus()
         }
         // notification selection
         else if(list_mode == "fbNotifications") {
@@ -125,7 +132,11 @@ window.onkeydown = function(e) {
                     list_index++
                     break;
             }
-            $("#fbNotificationsFlyout ul li div.anchorContainer").children().closest("a:first-child")[list_index].focus()
+            $("ul[data-testid='react_notif_list'] li div.anchorContainer")
+                .children()
+                .children()
+                .closest("a:first-child")[list_index]
+                .focus();
         }
     }
 };
