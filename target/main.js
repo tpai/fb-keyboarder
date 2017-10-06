@@ -2,7 +2,7 @@ if (navigator.appVersion.indexOf("Win")!=-1)os = "win"
 else if (navigator.appVersion.indexOf("Mac")!=-1)os = "mac"
 
 var $home = $("a[data-gt='{\"chrome_nav_item\":\"home_chrome\"}']");
-var $timeline = $("a[data-gt='{\"chrome_nav_item\":\"timeline_chrome\"}']");
+var $timeline = $("a[title='個人檔案']").find("span > span");
 
 // Quick Launch Hint Text
 var tip = function(val) { return "<div style='position: absolute; padding: 2px; right: 0px; bottom: 0px; font-size: 10px; line-height: 1; background-color: #3b5998; color: white;'>"+val+"</div>" };
@@ -24,7 +24,7 @@ $(document).ready(function() {
     setTimeout(function() {
         $(".fbChatSidebarMessage").next().find("input[type='text']").parent().append(tip("F"));
         $("img[id^='profile_pic_header']").css("float", "left");
-        $timeline.append("<br />"+hint2).css("line-height", "14px");
+        $timeline.html($timeline.text()+"<br />"+hint2).css("line-height", "14px");
         $home.append("<br />"+hint1).css("line-height", "14px");
     }, 1000);
 });
@@ -37,9 +37,9 @@ var chatbox = function(offset) {
 
     var $tab = $(tab);
     if($tab.prop("class").search("opened") != -1)
-        $tab.find("div.titlebar").click();
+        triggerMouseEvent($tab.find("div[role='heading']")[0], "mouseup");
     else
-        $tab.find("div.fbChatTab").click();
+        triggerMouseEvent($tab.find("div[role='button']")[0], "mouseup");
 };
 
 var list_mode
@@ -140,3 +140,9 @@ window.onkeydown = function(e) {
         }
     }
 };
+
+function triggerMouseEvent (node, eventType) {
+    var clickEvent = document.createEvent ('MouseEvents');
+    clickEvent.initEvent (eventType, true, true);
+    node.dispatchEvent (clickEvent);
+}
