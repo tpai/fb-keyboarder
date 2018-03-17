@@ -1,17 +1,17 @@
 {
 	"extName":
 	{
-		"message": "FB鍵盤手",
+		"message": "臉書鍵盤手",
 		"description":"擴充套件名稱"
 	},
 	"extShortName":
 	{
-		"message": "FB快捷",
+		"message": "臉書快捷",
 		"description":"擴充套件簡稱"
 	},
 	"extDescription":
 	{
-		"message": "FB鍵盤手專為愛用鍵盤看FB的玩家設計，快捷操作簡單又迅速！",
+		"message": "臉書鍵盤手專為愛用鍵盤看FB的玩家設計，快捷操作簡單又迅速！",
 		"description":"擴充套件描述"
 	}
 }

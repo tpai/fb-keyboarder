@@ -1,11 +1,9 @@
-Facebook Keyboarder
------------------
-New solution to use facebook, replace mouse click with combination key.
+# 臉書鍵盤手
 
-**Features**
+厭倦了右手不斷的在鍵盤跟滑鼠上來回嗎？想在開會或上課時偷上FB，但滑鼠不斷的click聲響相當困擾你嗎？救星來了！臉書鍵盤手設計了相當簡易的快捷鍵，讓你在臉書看文、留言、發訊息或點聊天視窗右手都不用去碰滑鼠，只要輕鬆的把兩隻手擺在鍵盤上裝認真就可以了！還在等什麼？趕快安裝下去吧！
 
-* Support both mac and windows user.
-* Tooltip right beneath function buttons.
-* You don't need mouse to use facebook anymore.
+## 特色
 
-[[Chrome Webstore](https://chrome.google.com/webstore/detail/fb%E9%8D%B5%E7%9B%A4%E6%89%8B/pahpmnbpjmhhemaggjpmkdghacihmaig?hl=zh-TW&gl=TW)]
+* 點擊小圖示可列出快捷鍵組合
+* 少數按鈕旁有提示字
+* 用鍵盤看很酷
