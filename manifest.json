@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "__MSG_extName__",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "__MSG_extDescription__",
   "default_locale": "zh_TW",
   "icons": {
@@ -13,7 +13,7 @@
   "content_scripts": [
     {
       "matches": ["http://www.facebook.com/*", "https://www.facebook.com/*", "https://apps.facebook.com/*"],
-      "js": ["libs/jquery.min.js", "target/main.js"],
+      "js": ["target/main.js"],
       "run_at": "document_end"
     }
   ],
